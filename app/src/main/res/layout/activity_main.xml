@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8F2F4"
     tools:context=".Activity.MainActivity">
 
     <TextView
@@ -102,6 +103,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:background="@drawable/border_botton"
+        android:drawableTint="@color/azul"
+        android:foregroundTint="#0F4957"
         android:text="Iniciar Sesion"
         android:textColor="#0F4957"
         android:textColorLink="#0F4957"

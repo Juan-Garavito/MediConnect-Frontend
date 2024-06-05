@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8F2F4"
     tools:context=".Activity.InicioPaciente">
 
     <TextView
@@ -82,7 +83,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idRecyclerList"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="340dp"
         android:layout_marginTop="-10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,5 +91,33 @@
         tools:listitem="@layout/item_lista_proximas_citas">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/idBtnCitas"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="191dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="191dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idRecyclerList"
+        app:srcCompat="@drawable/cita_logo" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="194dp"
+        android:layout_marginEnd="194dp"
+        android:text="Citas"
+        android:textColor="#0F4957"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idBtnCitas"
+        app:layout_constraintVertical_bias="0.058" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,8 @@
-package com.example.mediconnect.ClienteApi.Model;
+package com.example.mediconnect.Modelos;
 
 public class Ciudadano {
 
-    private String id;
+    private String numerodocumento;
     private String nombres;
     private String apellidos;
     private String url;
@@ -11,20 +11,20 @@ public class Ciudadano {
     public Ciudadano() {
     }
 
-    public Ciudadano(String id, String nombres, String apellidos, String url, Integer idRol) {
-        this.id = id;
+    public Ciudadano(String numerodocumento, String nombres, String apellidos, String url, Integer idRol) {
+        this.numerodocumento = numerodocumento;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.url = url;
         this.idRol = idRol;
     }
 
-    public String getId() {
-        return id;
+    public String getNumerodocumento() {
+        return numerodocumento;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setNumerodocumento(String numerodocumento) {
+        this.numerodocumento = numerodocumento;
     }
 
     public String getNombres() {
@@ -62,7 +62,7 @@ public class Ciudadano {
     @Override
     public String toString() {
         return "Ciudadano{" +
-                "id='" + id + '\'' +
+                "numerodocumento='" + numerodocumento + '\'' +
                 ", nombres='" + nombres + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", url='" + url + '\'' +

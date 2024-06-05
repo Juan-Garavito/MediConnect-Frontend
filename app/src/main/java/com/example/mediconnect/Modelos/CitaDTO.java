@@ -1,8 +1,8 @@
-package com.example.mediconnect.ClienteApi.Model;
+package com.example.mediconnect.Modelos;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Cita {
+public class CitaDTO implements Serializable {
     private String idCita;
     private String fechaCita;
     private String franjaHoraria;
@@ -11,13 +11,14 @@ public class Cita {
     private String idPaciente;
     private String medico;
     private String ips;
+    private String urlIps;
     private String idChat;
 
 
-    public Cita() {
+    public CitaDTO() {
     }
 
-    public Cita(String idCita, String fechaCita, String franjaHoraria, String especialidad, String modalidadCita, String idPaciente, String medico, String ips, String idChat) {
+    public CitaDTO(String idCita, String fechaCita, String franjaHoraria, String especialidad, String modalidadCita, String idPaciente, String medico, String ips, String urlIps, String idChat) {
         this.idCita = idCita;
         this.fechaCita = fechaCita;
         this.franjaHoraria = franjaHoraria;
@@ -26,6 +27,7 @@ public class Cita {
         this.idPaciente = idPaciente;
         this.medico = medico;
         this.ips = ips;
+        this.urlIps = urlIps;
         this.idChat = idChat;
     }
 
@@ -101,17 +103,26 @@ public class Cita {
         this.idChat = idChat;
     }
 
+    public String getUrlIps() {
+        return urlIps;
+    }
+
+    public void setUrlIps(String urlIps) {
+        this.urlIps = urlIps;
+    }
+
     @Override
     public String toString() {
         return "Cita{" +
                 "idCita='" + idCita + '\'' +
-                ", fechaCita=" + fechaCita +
+                ", fechaCita='" + fechaCita + '\'' +
                 ", franjaHoraria='" + franjaHoraria + '\'' +
                 ", especialidad='" + especialidad + '\'' +
                 ", modalidadCita='" + modalidadCita + '\'' +
                 ", idPaciente='" + idPaciente + '\'' +
                 ", medico='" + medico + '\'' +
                 ", ips='" + ips + '\'' +
+                ", urlIps='" + urlIps + '\'' +
                 ", idChat='" + idChat + '\'' +
                 '}';
     }

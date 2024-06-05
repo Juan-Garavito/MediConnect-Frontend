@@ -1,12 +1,14 @@
 package com.example.mediconnect.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mediconnect.ClienteApi.Api.ApiCiudadano;
 import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
-import com.example.mediconnect.ClienteApi.Model.Cita;
-import com.example.mediconnect.Adapter.ItemCitaAdapter;
+import com.example.mediconnect.Modelos.CitaDTO;
+import com.example.mediconnect.Adapter.ProximaCitaAdapter;
 import com.example.mediconnect.R;
+import com.example.mediconnect.Utilidades.CargaDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,6 +30,7 @@ import retrofit2.Response;
 public class InicioPaciente extends AppCompatActivity {
 
     Bundle bundle;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class InicioPaciente extends AppCompatActivity {
         String idDocumento = bundle.getString("idDocumento");
         String imagen = bundle.getString("imagen");
 
-
+        dialog =  new CargaDialog(this, getWindow()).crearDialogCarga();
+        dialog.show();
         Toast.makeText(getBaseContext(), nombre,Toast.LENGTH_SHORT).show();
 
         TextView textNombre = findViewById(R.id.idTextNombre);
@@ -49,26 +53,38 @@ public class InicioPaciente extends AppCompatActivity {
 
 
         RecyclerView recyclerView = findViewById(R.id.idRecyclerList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ApiCiudadano clienteRetrofit = ClienteRetrofit.getClient().create(ApiCiudadano.class);
-        Call<List<Cita>> callCitas = clienteRetrofit.citasPorPaciente(idDocumento);
+        Call<List<CitaDTO>> callCitas = clienteRetrofit.citasPorPacienteConLimite(idDocumento, 5);
 
-        callCitas.enqueue(new Callback<List<Cita>>() {
+        callCitas.enqueue(new Callback<List<CitaDTO>>() {
             @Override
-            public void onResponse(Call<List<Cita>> call, Response<List<Cita>> response) {
+            public void onResponse(Call<List<CitaDTO>> call, Response<List<CitaDTO>> response) {
+                dialog.dismiss();
                 Toast.makeText(getBaseContext(), "Repuesta",Toast.LENGTH_SHORT).show();
-                ItemCitaAdapter adapter = new ItemCitaAdapter(response.body());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                ProximaCitaAdapter adapter = new ProximaCitaAdapter(response.body());
                 recyclerView.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<List<Cita>> call, Throwable t) {
+            public void onFailure(Call<List<CitaDTO>> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getBaseContext(), "Error",Toast.LENGTH_SHORT).show();
                 Log.i("Error Citas",t.toString());
             }
         });
 
+
+        ImageView btnCitas = findViewById(R.id.idBtnCitas);
+        btnCitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InicioPaciente.this, CitasPaciente.class);
+                intent.putExtra("idDocumento", idDocumento);
+                startActivity(intent);
+            }
+        });
 
     }
 }

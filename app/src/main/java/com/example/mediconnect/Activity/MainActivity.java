@@ -1,13 +1,12 @@
 package com.example.mediconnect.Activity;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +14,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mediconnect.ClienteApi.Api.ApiCiudadano;
-import com.example.mediconnect.ClienteApi.Model.Ciudadano;
+import com.example.mediconnect.Modelos.Ciudadano;
 import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
-import com.example.mediconnect.ClienteApi.Model.Login;
+import com.example.mediconnect.Modelos.Login;
 import com.example.mediconnect.R;
+import com.example.mediconnect.Utilidades.CargaDialog;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -35,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btnInciarSesion = findViewById(R.id.btnIniciarSesion);
-        AlertDialog dialog = crearDialogCarga();
+        AlertDialog dialog = new CargaDialog(this, getWindow()).crearDialogCarga();
+
 
         btnInciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                             if(response.body().getIdRol() == 1){
                                 Intent intent = new Intent(MainActivity.this, InicioPaciente.class);
                                 intent.putExtra("nombre", response.body().getNombres().split(" ")[0] + " " + response.body().getApellidos().split(" ")[0]);
-                                intent.putExtra("idDocumento", response.body().getId());
+                                intent.putExtra("idDocumento", response.body().getNumerodocumento());
                                 intent.putExtra("imagen", response.body().getUrl());
                                 startActivity(intent);
                             }
@@ -93,13 +93,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    public AlertDialog crearDialogCarga(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_carga, null);
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-        return dialog;
-    }
 }

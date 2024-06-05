@@ -1,4 +1,4 @@
-package com.example.mediconnect.ClienteApi.Model;
+package com.example.mediconnect.Modelos;
 
 public class Login {
 

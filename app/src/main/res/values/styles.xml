@@ -8,4 +8,7 @@
         <item name="cornerSize">5%</item>
     </style>
 
+    <style name="color_calendario" parent="Theme.Material3.Light.Dialog">
+        <item name="colorAccent">@color/green</item>
+    </style>
 </resources>

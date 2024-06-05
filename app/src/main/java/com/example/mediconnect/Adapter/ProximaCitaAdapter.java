@@ -10,16 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mediconnect.ClienteApi.Model.Cita;
+import com.example.mediconnect.Modelos.CitaDTO;
 import com.example.mediconnect.R;
 
 import java.util.List;
 
-public class ItemCitaAdapter extends RecyclerView.Adapter<ItemCitaAdapter.ViewHolder>{
+public class ProximaCitaAdapter extends RecyclerView.Adapter<ProximaCitaAdapter.ViewHolder>{
 
-    private List<Cita> itemCitas;
+    private List<CitaDTO> itemCitas;
 
-    public ItemCitaAdapter(List<Cita> itemCitas) {
+    public ProximaCitaAdapter(List<CitaDTO> itemCitas) {
         this.itemCitas = itemCitas;
     }
 
@@ -32,7 +32,7 @@ public class ItemCitaAdapter extends RecyclerView.Adapter<ItemCitaAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Cita item = itemCitas.get(position);
+        CitaDTO item = itemCitas.get(position);
         holder.bind(item);
     }
 
@@ -57,13 +57,11 @@ public class ItemCitaAdapter extends RecyclerView.Adapter<ItemCitaAdapter.ViewHo
         }
 
 
-        public void bind(Cita item) {
+        public void bind(CitaDTO item) {
 
-            String franja = item.getFranjaHoraria().split("-")[0];
+            String franja = item.getFranjaHoraria().split(" ")[0] + " " + item.getFranjaHoraria().split(" ")[1];
             String medico = item.getMedico().split(" ")[0] + " " + item.getMedico().split(" ")[2];
-
-
-            textCita.setText(item.getEspecialidad());
+            textCita.setText("Cita " + item.getEspecialidad());
             textMedico.setText(medico);
             textFecha.setText(franja + " " + item.getFechaCita());
             textTipoCita.setText(item.getModalidadCita());
