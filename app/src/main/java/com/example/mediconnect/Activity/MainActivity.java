@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("imagen", response.body().getUrl());
                                 startActivity(intent);
                             }
+                            if(response.body().getIdRol() == 2){
+                                Intent intent = new Intent(MainActivity.this, InicioMedico.class);
+                                startActivity(intent);
+                            }
                             return;
                         }
                         Log.e("respuesta errada", "No existe este usuario");
