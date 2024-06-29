@@ -5,6 +5,7 @@ import com.example.mediconnect.Modelos.Ciudadano;
 import com.example.mediconnect.Modelos.Login;
 import com.example.mediconnect.Modelos.CitaDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,4 +25,7 @@ public interface ApiCiudadano {
 
     @GET("/cita/buscar/paciente/{idPaciente}/{maxLimit}")
     Call<List<CitaDTO>> citasPorPacienteConLimite(@Path("idPaciente") String idPaciente, @Path("maxLimit") int maxLimit);
+
+    @GET("/cita/buscar/medico/{idMedico}/{fechaCita}")
+    Call<List<CitaDTO>> citasPorIdMedicoFecha(@Path("idMedico") String idMedico, @Path("fechaCita") LocalDate fechaCita);
 }

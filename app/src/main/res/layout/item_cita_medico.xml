@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/border_oval">
+
+    <TextView
+        android:id="@+id/idEspecialidadCitaMedico"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:background="@drawable/border_oval"
+        android:backgroundTint="#79c602"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="Cita Medica"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Hora:"
+        android:textColor="#0F4957"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idEspecialidadCitaMedico" />
+
+    <TextView
+        android:id="@+id/textViewM12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Paciente:"
+        android:textColor="#0F4957"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Modalidad:"
+        android:textColor="#0F4957"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewM12"
+        tools:ignore="DuplicateIds,MissingConstraints" />
+
+    <TextView
+        android:id="@+id/idHoraCitaAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="3:00 pm"
+        android:textColor="#0F4957"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/idImagenIpsAM"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/idEspecialidadCitaMedico" />
+
+    <TextView
+        android:id="@+id/idPacienteAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Juan Mejia"
+        android:textColor="#2d9bf0"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/idImagenIpsAM"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toEndOf="@+id/textViewM12"
+        app:layout_constraintTop_toBottomOf="@+id/idHoraCitaAM" />
+
+    <TextView
+        android:id="@+id/idModaCitaMedico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Presencial"
+        android:textColor="#79c602"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/idImagenIpsAM"
+        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/idPacienteAM" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/idImagenIpsAM"
+        android:layout_width="57dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="60dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idEspecialidadCitaMedico"
+        app:shapeAppearanceOverlay="@style/circular"
+        app:srcCompat="@mipmap/ips_img_round"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/idCancelarCItaAM"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/red"
+        android:text="Cancelar"
+        android:textColor="#FFFFFF"
+        android:textColorLink="#E80000"
+        app:iconTint="#CA2525"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idModaCitaMedico"
+        app:rippleColor="#873535"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

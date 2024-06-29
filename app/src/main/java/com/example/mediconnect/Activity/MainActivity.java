@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if(response.body().getIdRol() == 2){
                                 Intent intent = new Intent(MainActivity.this, InicioMedico.class);
+                                intent.putExtra("nombre", response.body().getNombres().split(" ")[0] + " " + response.body().getApellidos().split(" ")[0]);
+                                intent.putExtra("idDocumento", response.body().getNumerodocumento());
+                                intent.putExtra("imagen", response.body().getUrl());
                                 startActivity(intent);
                             }
                             return;
