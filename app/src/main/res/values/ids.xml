@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tvTitle" type="id" />
+    <item name="ivSettings" type="id" />
+    <item name="ivProfilePicture" type="id" />
+    <item name="tvName" type="id" />
+    <item name="tvSurname" type="id" />
+    <item name="etId" type="id" />
+    <item name="tvDateOfBirth" type="id" />
+    <item name="etMonth" type="id" />
+    <item name="etYear" type="id" />
+    <item name="tvGender" type="id" />
+    <item name="rgGender" type="id" />
+    <item name="rbMale" type="id" />
+    <item name="rbFemale" type="id" />
+    <item name="tvRh" type="id" />
+    <item name="etRh" type="id" />
+    <item name="etAddress" type="id" />
+    <item name="etEmail" type="id" />
+    <item name="etPassword" type="id" />
+    <item name="tvShowPassword" type="id" />
+    <item name="llNavigation" type="id" />
+    <item name="btnAgenda" type="id" />
+    <item name="btnProfile" type="id" />
+</resources>

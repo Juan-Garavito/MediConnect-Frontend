@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ChatCita">
+
+    <EditText
+        android:id="@+id/idMensajeChat"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_green"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="5dp"
+        android:textAppearance="@style/borde_redondo"
+        android:textColor="@color/azul"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+    />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/idMensajeChat"
+        app:shapeAppearanceOverlay="@style/circularConFondo"
+        app:srcCompat="@drawable/enviar_chat"
+        app:strokeColor="#79c602"
+        app:strokeWidth="2dp"
+        app:tint="@color/green"
+        app:tintMode="src_over" />
+
+    <ImageView
+        android:id="@+id/idBtnEnviar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/idMensajeChat"
+        app:srcCompat="@drawable/enviar_chat" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idRecyclerChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/idMensajeChat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
     @NonNull
     @Override
     public CitaAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cita, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cita_2, parent, false);
         return new ViewHolder(view);
     }
 
@@ -74,10 +74,19 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             textCita.setText(cita.getEspecialidad());
             textMedico.setText(cita.getMedico().split(" ")[0] + " " + cita.getMedico().split(" ")[2]);
             textFecha.setText(cita.getFechaCita());
-            textHora.setText(cita.getFranjaHoraria().split("-")[0]);
+            textHora.setText(cita.getFranjaHoraria().split(" ")[0] + " " + cita.getFranjaHoraria().split(" ")[1]);
             textTipoCita.setText(cita.getModalidadCita());
             Glide.with(itemView.getContext()).load(cita.getUrlIps()).into(imgIps);
             textIps.setText(cita.getIps());
+
+            if(cita.getModalidadCita().equals("Virtual")){
+                imgIps.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listenerCitaAdapter.ingresarChat(cita);
+                    }
+                });
+            }
 
             btnReprogramarCita.setOnClickListener(new View.OnClickListener() {
                 @Override

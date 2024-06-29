@@ -3,7 +3,7 @@ package com.example.mediconnect.ClienteApi.Api;
 import com.example.mediconnect.Modelos.Cita;
 import com.example.mediconnect.Modelos.Ips;
 import com.example.mediconnect.Modelos.ModalidadCita;
-import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.Modelos.Especialidad;
 import com.example.mediconnect.Modelos.FranjaHoraria;
 
@@ -24,10 +24,10 @@ public interface ApiCita {
     Call<List<Especialidad>> buscarTodasEspecialidades();
 
     @GET("cita/buscar/medicos/{fecha}/{idEspecialidad}")
-    Call<List<Ciudadano>> buscarMedicosConFechaYEspecialidad(@Path("fecha") LocalDate fecha, @Path("idEspecialidad") Integer idEspecialidad);
+    Call<List<CiudadanoDTO>> buscarMedicosConFechaYEspecialidad(@Path("fecha") LocalDate fecha, @Path("idEspecialidad") Integer idEspecialidad);
 
-    @GET("cita/buscar/medicos/franjahoraria/{idMedico}")
-    Call<List<FranjaHoraria>> buscarTodasFranjaHoraria(@Path("idMedico") String idMedico);
+    @GET("cita/buscar/franjahoraria/{fecha}/{idMedico}")
+    Call<List<FranjaHoraria>> buscarTodasFranjaHoraria(@Path("idMedico") String idMedico, @Path("fecha") LocalDate fecha);
 
     @GET("cita/buscar/modalidadcita")
     Call<List<ModalidadCita>> buscarTodasModalidaCita();

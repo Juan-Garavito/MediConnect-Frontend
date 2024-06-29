@@ -11,4 +11,10 @@
     <style name="color_calendario" parent="Theme.Material3.Light.Dialog">
         <item name="colorAccent">@color/green</item>
     </style>
+
+    <style name="circularConFondo">
+        <item name="cornerSize">50%</item>
+        <item name="android:background">@color/green</item>
+        <item name="android:backgroundTint">@color/green</item>
+    </style>
 </resources>

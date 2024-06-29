@@ -1,9 +1,10 @@
 package com.example.mediconnect.Modelos;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Cita {
+public class Cita implements Serializable {
 
     private String idCita;
     private String fechaCita;

@@ -1,6 +1,6 @@
 package com.example.mediconnect.Utilidades;
 
-import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.Modelos.Especialidad;
 import com.example.mediconnect.Modelos.FranjaHoraria;
 import com.example.mediconnect.Modelos.Ips;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DataFormularioAgendar {
     private static DataFormularioAgendar instance;
-    private  List<Ciudadano> medicos;
+    private  List<CiudadanoDTO> medicos;
     private  List<Especialidad> especialidads;
     private  List<FranjaHoraria> franjaHorarias;
     private List<ModalidadCita> modalidadCitas;
@@ -28,11 +28,11 @@ public class DataFormularioAgendar {
     }
 
 
-    public List<Ciudadano> getMedicos() {
+    public List<CiudadanoDTO> getMedicos() {
         return medicos;
     }
 
-    public void setMedicos(List<Ciudadano> medicos) {
+    public void setMedicos(List<CiudadanoDTO> medicos) {
         this.medicos = medicos;
     }
 

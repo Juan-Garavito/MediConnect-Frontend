@@ -28,6 +28,7 @@ import com.example.mediconnect.Utilidades.TipoAutocompleteView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +70,7 @@ public class AgendarCitaPaciente extends AppCompatActivity {
 
         opcionesHash = new HashMap<>();
 
-        autoCompleteEspecialidades = findViewById(R.id.idAutoEspecialidad);
+        autoCompleteEspecialidades = findViewById(R.id.etListTipoSangre);
         autoCompleteMedico = findViewById(R.id.idAutoMedico);
         autoCompleteFranjaHoraria =  findViewById(R.id.idAutoFranjaHoraria);
         autoCompleteModalidad = findViewById(R.id.idAutoModalidad);
@@ -117,7 +118,7 @@ public class AgendarCitaPaciente extends AppCompatActivity {
                         opcionesHash.put(TipoAutocompleteView.IPS, String.valueOf(cita.getIdIps()));
                     }
                     formularioAgendar.buscarMedico(LocalDate.parse(cita.getFechaCita()), cita.getIdEspecialidad(), autoCompleteMedico);
-                    formularioAgendar.buscarFranjaHoraria(cita.getIdMedico(), autoCompleteFranjaHoraria);
+                    formularioAgendar.buscarFranjaHoraria(cita.getIdMedico(), LocalDate.parse(cita.getFechaCita()), autoCompleteFranjaHoraria);
                 }
             });
 
@@ -132,12 +133,21 @@ public class AgendarCitaPaciente extends AppCompatActivity {
 
     public void listenerFormulario(){
         textCalendario.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 calendario.obtenerCalendario();
                 calendario.listenerCalendario((int year, int month, int dayOfMonth) -> {
-                    String fechaSinFormato = year + "-" + month + "-" + dayOfMonth;
+                    int mes = month+1;
+                    String fechaSinFormato = year + "-" + mes + "-" + dayOfMonth;
                     String fechaConFormato = fechaSinFormato.replaceAll("-(\\d(?!\\d))", "-0$1");
+                    LocalDate fechaAhora = LocalDate.now(ZoneId.of("America/Bogota"));
+
+                    if(fechaAhora.isAfter(LocalDate.parse(fechaConFormato))){
+                        Toast.makeText(getBaseContext(),"Esa fecha no es valida", Toast.LENGTH_SHORT).show();
+                        calendario.obtenerCalendario();
+                        return;
+                    }
 
                     if (!opcionesHash.containsKey(TipoAutocompleteView.FECHA)){
                         opcionesHash.put(TipoAutocompleteView.FECHA, fechaConFormato.toString());
@@ -181,19 +191,20 @@ public class AgendarCitaPaciente extends AppCompatActivity {
         });
 
         autoCompleteMedico.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!opcionesHash.containsKey(TipoAutocompleteView.MEDICO)){
                     activarVista(textInputLayouts.get(2));
                     opcionesHash.put(TipoAutocompleteView.MEDICO, dataFormularioAgendar.getMedicos().get(position).getNumerodocumento());
                     opcionesHash.remove(TipoAutocompleteView.HORA);
-                    formularioAgendar.buscarFranjaHoraria(dataFormularioAgendar.getMedicos().get(position).getNumerodocumento(), autoCompleteFranjaHoraria);
+                    formularioAgendar.buscarFranjaHoraria(dataFormularioAgendar.getMedicos().get(position).getNumerodocumento(), LocalDate.parse(textCalendario.getText().toString()), autoCompleteFranjaHoraria);
                     return;
                 }
 
                 if(!opcionesHash.get(TipoAutocompleteView.MEDICO).equals(dataFormularioAgendar.getMedicos().get(position).getNumerodocumento())){
                     opcionesHash.put(TipoAutocompleteView.MEDICO, dataFormularioAgendar.getMedicos().get(position).getNumerodocumento());
-                    formularioAgendar.buscarFranjaHoraria(dataFormularioAgendar.getMedicos().get(position).getNumerodocumento(), autoCompleteFranjaHoraria);
+                    formularioAgendar.buscarFranjaHoraria(dataFormularioAgendar.getMedicos().get(position).getNumerodocumento(), LocalDate.parse(textCalendario.getText().toString()),autoCompleteFranjaHoraria);
                     opcionesHash.remove(TipoAutocompleteView.HORA);
                     desactivarVistas(textInputLayouts, 3, true);
                 }
@@ -239,6 +250,7 @@ public class AgendarCitaPaciente extends AppCompatActivity {
             }
         });
 
+        try{
         btnAgendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +272,7 @@ public class AgendarCitaPaciente extends AppCompatActivity {
                     return;
                 }
 
-                if(cita.getIdCita().equals(citaReagendar.getIdCita())){
+                if(citaReagendar != null){
                     formularioAgendar.reagendarCita(cita);
                     return;
                 }
@@ -268,6 +280,9 @@ public class AgendarCitaPaciente extends AppCompatActivity {
                 formularioAgendar.agendarCita(cita);
             }
         });
+        }catch(Throwable e){
+            Log.e("agendar", e.getMessage());
+        }
     }
 
     public Cita obetenerCita(){

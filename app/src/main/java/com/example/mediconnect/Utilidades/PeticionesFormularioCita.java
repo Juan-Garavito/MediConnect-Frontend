@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.mediconnect.Activity.CitasPaciente;
 import com.example.mediconnect.ClienteApi.Api.ApiCita;
 import com.example.mediconnect.Modelos.Cita;
-import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.Modelos.Especialidad;
 import com.example.mediconnect.Modelos.FranjaHoraria;
 import com.example.mediconnect.Modelos.Ips;
@@ -21,7 +21,6 @@ import com.example.mediconnect.Modelos.ModalidadCita;
 import com.example.mediconnect.R;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -70,13 +69,13 @@ public class PeticionesFormularioCita {
     }
 
     public void buscarMedico(LocalDate fecha, int idEspecialidad, AutoCompleteTextView autoCompleteMedico){
-        Call<List<Ciudadano>> callCiudadano = apiCita.buscarMedicosConFechaYEspecialidad(fecha, idEspecialidad);
-        callCiudadano.enqueue(new Callback<List<Ciudadano>>() {
+        Call<List<CiudadanoDTO>> callCiudadano = apiCita.buscarMedicosConFechaYEspecialidad(fecha, idEspecialidad);
+        callCiudadano.enqueue(new Callback<List<CiudadanoDTO>>() {
             @Override
-            public void onResponse(Call<List<Ciudadano>> call, Response<List<Ciudadano>> response) {
+            public void onResponse(Call<List<CiudadanoDTO>> call, Response<List<CiudadanoDTO>> response) {
                 ArrayAdapter<String> arrayAdapter;
                 if(response.body() != null){
-                    List<Ciudadano> medicos = response.body();
+                    List<CiudadanoDTO> medicos = response.body();
                     dataFormularioAgendar.setMedicos(medicos);
                     String[] medicosText = new String[medicos.size()];
                     for (int i = 0; i<medicos.size(); i++){
@@ -95,7 +94,7 @@ public class PeticionesFormularioCita {
             }
 
             @Override
-            public void onFailure(Call<List<Ciudadano>> call, Throwable t) {
+            public void onFailure(Call<List<CiudadanoDTO>> call, Throwable t) {
                 Log.i("errorCiudadano", t.toString());
             }
         });
@@ -103,8 +102,8 @@ public class PeticionesFormularioCita {
 
 
 
-    public void buscarFranjaHoraria(String idMedico, AutoCompleteTextView autoCompleteFranjaHoraria){
-        Call<List<FranjaHoraria>> callFranjaHoraria = apiCita.buscarTodasFranjaHoraria(idMedico);
+    public void buscarFranjaHoraria(String idMedico, LocalDate fecha, AutoCompleteTextView autoCompleteFranjaHoraria){
+        Call<List<FranjaHoraria>> callFranjaHoraria = apiCita.buscarTodasFranjaHoraria(idMedico, fecha);
         callFranjaHoraria.enqueue(new Callback<List<FranjaHoraria>>() {
             @Override
             public void onResponse(Call<List<FranjaHoraria>> call, Response<List<FranjaHoraria>> response) {
@@ -177,9 +176,12 @@ public class PeticionesFormularioCita {
 
     public void agendarCita(Cita cita){
         Call<Cita> callCita = apiCita.enviarCita(cita);
+        AlertDialog dialog = cargaDialog.crearDialogCarga();
+        dialog.show();
         callCita.enqueue(new Callback<Cita>() {
             @Override
             public void onResponse(Call<Cita> call, Response<Cita> response) {
+                dialog.dismiss();
                 if (response.body() != null){
                     Toast.makeText(context, "Se ha Agendado tu cita", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CitasPaciente.class);
@@ -189,6 +191,7 @@ public class PeticionesFormularioCita {
 
             @Override
             public void onFailure(Call<Cita> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(context, "Hubo un error en la Conexion", Toast.LENGTH_SHORT).show();
             }
         });
@@ -212,7 +215,7 @@ public class PeticionesFormularioCita {
 
             @Override
             public void onFailure(Call<Cita> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }
@@ -232,7 +235,7 @@ public class PeticionesFormularioCita {
 
             @Override
             public void onFailure(Call<Cita> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
 

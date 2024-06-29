@@ -5,6 +5,9 @@
       <entry key="AgendarCitaPaciente">
         <State />
       </entry>
+      <entry key="ChatCita">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>

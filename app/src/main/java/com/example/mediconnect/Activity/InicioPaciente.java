@@ -18,6 +18,8 @@ import com.example.mediconnect.ClienteApi.Api.ApiCiudadano;
 import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
 import com.example.mediconnect.Modelos.CitaDTO;
 import com.example.mediconnect.Adapter.ProximaCitaAdapter;
+import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.R;
 import com.example.mediconnect.Utilidades.CargaDialog;
 
@@ -31,6 +33,9 @@ public class InicioPaciente extends AppCompatActivity {
 
     Bundle bundle;
     AlertDialog dialog;
+    TextView tachadoCitasProximas;
+    TextView citasProximasVacio;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +43,23 @@ public class InicioPaciente extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_paciente);
 
         bundle = getIntent().getExtras();
-        String nombre = bundle.getString("nombre");
-        String idDocumento = bundle.getString("idDocumento");
-        String imagen = bundle.getString("imagen");
+        CiudadanoDTO ciudadano = (CiudadanoDTO) bundle.getSerializable("ciudadano");
+        String nombre = ciudadano.getNombres().split(" ")[0] + " " + ciudadano.getApellidos().split(" ")[0];
+        String idDocumento = ciudadano.getNumerodocumento();
+        String imagen = ciudadano.getUrl();
 
         dialog =  new CargaDialog(this, getWindow()).crearDialogCarga();
         dialog.show();
-        Toast.makeText(getBaseContext(), nombre,Toast.LENGTH_SHORT).show();
 
         TextView textNombre = findViewById(R.id.idTextNombre);
         textNombre.setText(nombre);
         ImageView imageView = findViewById(R.id.idImagen);
         Glide.with(this).load(imagen).into(imageView);
 
+        tachadoCitasProximas = findViewById(R.id.idTextoProximasTachado);
+        citasProximasVacio = findViewById(R.id.idCitasDisponiblesVacio);
 
-        RecyclerView recyclerView = findViewById(R.id.idRecyclerList);
+        recyclerView = findViewById(R.id.idRecyclerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ApiCiudadano clienteRetrofit = ClienteRetrofit.getClient().create(ApiCiudadano.class);
@@ -62,9 +69,16 @@ public class InicioPaciente extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<CitaDTO>> call, Response<List<CitaDTO>> response) {
                 dialog.dismiss();
-                Toast.makeText(getBaseContext(), "Repuesta",Toast.LENGTH_SHORT).show();
-                ProximaCitaAdapter adapter = new ProximaCitaAdapter(response.body());
-                recyclerView.setAdapter(adapter);
+
+                if(response.body() != null){
+                    ProximaCitaAdapter adapter = new ProximaCitaAdapter(response.body());
+                    recyclerView.setAdapter(adapter);
+                    return;
+                }
+
+                recyclerView.setVisibility(View.GONE);
+                tachadoCitasProximas.setVisibility(View.VISIBLE);
+                citasProximasVacio.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -77,11 +91,23 @@ public class InicioPaciente extends AppCompatActivity {
 
 
         ImageView btnCitas = findViewById(R.id.idBtnCitas);
+        ImageView btnPerfil = findViewById(R.id.idBtnPerfil);
+
         btnCitas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InicioPaciente.this, CitasPaciente.class);
-                intent.putExtra("idDocumento", idDocumento);
+                intent.putExtra("ciudadano", ciudadano);
+                startActivity(intent);
+            }
+        });
+
+        btnPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InicioPaciente.this, PerfilPaciente.class);
+                intent.putExtra("ciudadano", ciudadano);
+                intent.putExtra("tipoPerfil", "1");
                 startActivity(intent);
             }
         });

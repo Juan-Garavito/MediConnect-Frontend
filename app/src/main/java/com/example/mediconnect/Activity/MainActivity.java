@@ -1,10 +1,8 @@
 package com.example.mediconnect.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,12 +12,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mediconnect.ClienteApi.Api.ApiCiudadano;
-import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
 import com.example.mediconnect.Modelos.Login;
 import com.example.mediconnect.R;
 import com.example.mediconnect.Utilidades.CargaDialog;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -60,20 +59,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("datos login",login.toString());
 
                 ApiCiudadano clienteRetrofit = ClienteRetrofit.getClient().create(ApiCiudadano.class);
-                Call<Ciudadano> ciudadanoCall = clienteRetrofit.login(login);
+                Call<CiudadanoDTO> ciudadanoCall = clienteRetrofit.login(login);
 
-                ciudadanoCall.enqueue(new Callback<Ciudadano>() {
+                ciudadanoCall.enqueue(new Callback<CiudadanoDTO>() {
                     @Override
-                    public void onResponse(Call<Ciudadano> call, Response<Ciudadano> response) {
+                    public void onResponse(Call<CiudadanoDTO> call, Response<CiudadanoDTO> response) {
                         dialog.dismiss();
                         if(response.isSuccessful() && !response.body().equals(null)){
                             Log.i("respuesta Login", response.body().toString());
                             Toast.makeText(getBaseContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
                             if(response.body().getIdRol() == 1){
                                 Intent intent = new Intent(MainActivity.this, InicioPaciente.class);
-                                intent.putExtra("nombre", response.body().getNombres().split(" ")[0] + " " + response.body().getApellidos().split(" ")[0]);
-                                intent.putExtra("idDocumento", response.body().getNumerodocumento());
-                                intent.putExtra("imagen", response.body().getUrl());
+                                intent.putExtra("ciudadano", (Serializable) response.body());
                                 startActivity(intent);
                             }
                             if(response.body().getIdRol() == 2){
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Ciudadano> call, Throwable t) {
+                    public void onFailure(Call<CiudadanoDTO> call, Throwable t) {
                         dialog.dismiss();
                         Toast.makeText(getBaseContext(), "Hay un error de conexion", Toast.LENGTH_SHORT).show();
                         Log.e("error login",t.toString());

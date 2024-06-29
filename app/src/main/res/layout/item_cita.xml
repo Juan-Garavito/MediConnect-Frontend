@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="260dp"
     android:background="@drawable/border_oval">
 
@@ -10,18 +10,19 @@
         android:id="@+id/idCitaFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="18 de marzo de 2024"
         android:textColor="#0F4957"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idEspecialidadCita" />
 
     <TextView
         android:id="@+id/idEspecialidadCita"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="75dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/border_oval"
@@ -33,7 +34,9 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/idCitaFecha"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView11"
@@ -119,12 +122,13 @@
         android:layout_width="57dp"
         android:layout_height="60dp"
         android:layout_marginTop="41dp"
-        android:layout_marginEnd="80dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@+id/idIpsCita"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idEspecialidadCita"
         app:shapeAppearanceOverlay="@style/circular"
         app:srcCompat="@mipmap/ips_img_round"
@@ -134,13 +138,14 @@
         android:id="@+id/idIpsCita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="IPS"
         android:textColor="#0F4957"
         app:layout_constraintBottom_toTopOf="@+id/idReprogramarCita"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.854"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idImagenIps" />
 
     <Button
@@ -148,7 +153,6 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="87dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/red"
         android:text="Cancelar"
