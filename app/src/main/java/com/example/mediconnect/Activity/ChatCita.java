@@ -25,16 +25,21 @@ import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
 import com.example.mediconnect.Modelos.Cita;
 import com.example.mediconnect.Modelos.Mensaje;
 import com.example.mediconnect.R;
+import com.example.mediconnect.Utilidades.AESEncryption;
 import com.example.mediconnect.Utilidades.CargaDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -55,6 +60,7 @@ public class ChatCita extends AppCompatActivity {
     Bundle bundle;
     String remitente;
     String destinatario;
+    AESEncryption aesEncryption;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("CheckResult")
@@ -70,6 +76,8 @@ public class ChatCita extends AppCompatActivity {
         String idCiudadano =  bundle.getString("idCiudadano");
         String idChat = bundle.getString("idChat");
 
+        aesEncryption = AESEncryption.getInstance(getBaseContext());
+
         recyclerView = findViewById(R.id.idRecyclerChat);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -79,12 +87,14 @@ public class ChatCita extends AppCompatActivity {
         String destino = "/chat/"+idChat;
         Toast.makeText(this, destino, Toast.LENGTH_SHORT).show();
 
+
         obtenerMensajes(idChat, pagina);
 
 
         recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
                 if(linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
                         & mensajesChat.size() >= 20 & contieneMensajes){
                     pagina += 1;
@@ -100,7 +110,7 @@ public class ChatCita extends AppCompatActivity {
             }
         });
 
-        StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.1.16:8080/chats");
+        StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.31.35:8080/chats");
         stompClient.connect();
 
 
@@ -123,19 +133,30 @@ public class ChatCita extends AppCompatActivity {
         btnEnviarMensaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mensaje.setContenido(textMensajeContenido.getText().toString());
-                mensaje.setFechaMensaje(LocalDate.now(ZoneId.of("America/Bogota")).toString()
-                + "T" + LocalTime.now(ZoneId.of("America/Bogota")));
-                mensaje.setIdMensaje(UUID.randomUUID().toString().substring(0,9));
-                textMensajeContenido.setText("");
-                stompClient.send("/chat/"+idChat, mGson.toJson(mensaje)).subscribe();
+                String mensajeEncriptado = null;
+                try {
+                    mensajeEncriptado = aesEncryption.cifrar(textMensajeContenido.getText().toString());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                mensaje.setContenido(mensajeEncriptado);
+                    mensaje.setFechaMensaje(LocalDate.now(ZoneId.of("America/Bogota")).toString()
+                            + "T" + LocalTime.now(ZoneId.of("America/Bogota")));
+                    mensaje.setIdMensaje(UUID.randomUUID().toString().substring(0,9));
+                    textMensajeContenido.setText("");
+                    stompClient.send("/chat/"+idChat, mGson.toJson(mensaje)).subscribe();
             }
         });
 
 
+
         stompClient.topic("/chat/"+idChat).subscribe((message)->{
             mensajesChat.add(mGson.fromJson(message.getPayload(), Mensaje.class));
-            runOnUiThread(()-> mensajeAdapter.notifyItemInserted(mensajesChat.size()-1));
+            try {
+                mensajeAdapter.notifyItemInserted(mensajesChat.size()-1);
+            }catch (Throwable e){
+                Log.e("chat12414", e.getMessage());
+            }
             recyclerView.smoothScrollToPosition(mensajesChat.size()-1);
         });
 
@@ -150,21 +171,26 @@ public class ChatCita extends AppCompatActivity {
         callMensajes.enqueue(new Callback<List<Mensaje>>() {
             @Override
             public void onResponse(Call<List<Mensaje>> call, Response<List<Mensaje>> response) {
-                if(response.body() != null){
-                    List<Mensaje> mensajesList = response.body();
-                    Collections.reverse(mensajesList);
-                    mensajesChat.addAll(0, mensajesList);
-                    mensajeAdapter.notifyDataSetChanged();
-                    if(!contieneMensajes){
-                        recyclerView.smoothScrollToPosition(mensajesChat.size()-1);
-                    }
-                }
 
-                if(response.body() == null && contieneMensajes){
-                    contieneMensajes = false;
-                    Toast.makeText(getBaseContext(), "No tienes mas mensajes", Toast.LENGTH_SHORT).show();
-                }
-                dialog.dismiss();
+                    if(response.body() != null) {
+                        Log.i("chat12414", "entro");
+
+                        List<Mensaje> mensajesList = response.body();
+                        Collections.reverse(mensajesList);
+                        mensajesChat.addAll(0, mensajesList);
+                        mensajeAdapter.notifyDataSetChanged();
+                        if (!contieneMensajes) {
+                            recyclerView.smoothScrollToPosition(mensajesChat.size() - 1);
+                        }
+                    }
+
+
+                    if(response.body() == null && contieneMensajes){
+                        Log.i("chat12414", "entro2");
+                        contieneMensajes = false;
+                        Toast.makeText(getBaseContext(), "No tienes mas mensajes", Toast.LENGTH_SHORT).show();
+                    }
+                    dialog.dismiss();
             }
 
             @Override
@@ -173,4 +199,6 @@ public class ChatCita extends AppCompatActivity {
             }
         });
     }
+
+
 }

@@ -71,5 +71,15 @@ public class Mensaje {
         this.idDestinatario = idDestinatario;
     }
 
-
+    @Override
+    public String toString() {
+        return "Mensaje{" +
+                "idMensaje='" + idMensaje + '\'' +
+                ", contenido='" + contenido + '\'' +
+                ", fechaMensaje='" + fechaMensaje + '\'' +
+                ", idChat='" + idChat + '\'' +
+                ", idRemitente='" + idRemitente + '\'' +
+                ", idDestinatario='" + idDestinatario + '\'' +
+                '}';
+    }
 }

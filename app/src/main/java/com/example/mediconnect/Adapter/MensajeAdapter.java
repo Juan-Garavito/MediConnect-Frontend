@@ -1,5 +1,7 @@
 package com.example.mediconnect.Adapter;
 
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mediconnect.Modelos.Mensaje;
 import com.example.mediconnect.R;
+import com.example.mediconnect.Utilidades.AESEncryption;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 
 public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHolder> {
@@ -28,13 +34,21 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHold
     @Override
     public MensajeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mensaje_chat, null);
-        return new ViewHolder(view);
+        try {
+            return new ViewHolder(view);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull MensajeAdapter.ViewHolder holder, int position) {
         Mensaje mensaje = mensajes.get(position);
-        holder.bind(mensaje, this.idCiudadano);
+        try {
+            holder.bind(mensaje, this.idCiudadano);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -47,23 +61,28 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHold
 
         public TextView textDestinatario;
         public TextView textRemitente;
-        public ViewHolder(@NonNull View itemView) {
+        private final AESEncryption aesEncryption;
+
+        public ViewHolder(@NonNull View itemView) throws IOException {
             super(itemView);
             this.textDestinatario = itemView.findViewById(R.id.idDestinatario);
             this.textRemitente = itemView.findViewById(R.id.idRemitente);
+            this.aesEncryption =  AESEncryption.getInstance(itemView.getContext());
         }
 
-        public void bind(Mensaje mensaje, String idCiudadano) {
+        public void bind(Mensaje mensaje, String idCiudadano) throws Exception {
+            String mensajeDesncriptado = aesEncryption.descifrar(mensaje.getContenido());
             if(mensaje.getIdDestinatario().equals(idCiudadano)){
-                textDestinatario.setText(mensaje.getContenido());
+                textDestinatario.setText(mensajeDesncriptado);
                 textDestinatario.setVisibility(View.VISIBLE);
                 textRemitente.setVisibility(View.GONE);
                 return;
             }
 
-            textRemitente.setText(mensaje.getContenido());
+            textRemitente.setText(mensajeDesncriptado);
             textRemitente.setVisibility(View.VISIBLE);
             textDestinatario.setVisibility(View.GONE);
         }
+
     }
 }
