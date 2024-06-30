@@ -4,7 +4,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClienteRetrofit {
-    private static final String BASE_URL = "http://192.168.0.108:8080";
+    private static final String BASE_URL = "https://mediconnect-backend-1.onrender.com";
+
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

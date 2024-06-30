@@ -19,6 +19,8 @@ import com.example.mediconnect.ClienteApi.Api.ApiCita;
 import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
 import com.example.mediconnect.Modelos.Cita;
 import com.example.mediconnect.Modelos.CitaDTO;
+import com.example.mediconnect.Modelos.Ciudadano;
+import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.Utilidades.Calendario;
 import com.example.mediconnect.R;
 import com.example.mediconnect.Utilidades.DataFormularioAgendar;
@@ -36,6 +38,7 @@ import java.util.UUID;
 
 public class AgendarCitaPaciente extends AppCompatActivity {
     String idDocumento;
+    CiudadanoDTO ciudadano;
     Calendario calendario;
     PeticionesFormularioCita formularioAgendar;
     AutoCompleteTextView autoCompleteEspecialidades;
@@ -97,7 +100,8 @@ public class AgendarCitaPaciente extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-        idDocumento = bundle.getString("idDocumento");
+        ciudadano = (CiudadanoDTO) bundle.getSerializable("ciudadano");
+        idDocumento = ciudadano.getNumerodocumento();
         CitaDTO citaDTO = (CitaDTO) bundle.getSerializable("cita");
         if(citaDTO != null){
             autoCompleteEspecialidades.setText(citaDTO.getEspecialidad());
@@ -273,11 +277,11 @@ public class AgendarCitaPaciente extends AppCompatActivity {
                 }
 
                 if(citaReagendar != null){
-                    formularioAgendar.reagendarCita(cita);
+                    formularioAgendar.reagendarCita(cita, ciudadano);
                     return;
                 }
 
-                formularioAgendar.agendarCita(cita);
+                formularioAgendar.agendarCita(cita, ciudadano);
             }
         });
         }catch(Throwable e){

@@ -174,7 +174,7 @@ public class PeticionesFormularioCita {
 
     }
 
-    public void agendarCita(Cita cita){
+    public void agendarCita(Cita cita, CiudadanoDTO ciudadanoDTO){
         Call<Cita> callCita = apiCita.enviarCita(cita);
         AlertDialog dialog = cargaDialog.crearDialogCarga();
         dialog.show();
@@ -185,6 +185,7 @@ public class PeticionesFormularioCita {
                 if (response.body() != null){
                     Toast.makeText(context, "Se ha Agendado tu cita", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CitasPaciente.class);
+                    intent.putExtra("ciudadano", ciudadanoDTO);
                     context.startActivity(intent);
                 }
             }
@@ -198,7 +199,7 @@ public class PeticionesFormularioCita {
     }
 
 
-    public void reagendarCita(Cita cita){
+    public void reagendarCita(Cita cita, CiudadanoDTO ciudadanoDTO){
         Call<Cita> callCita = apiCita.editarCita(cita);
         AlertDialog dialog = cargaDialog.crearDialogCarga();
         dialog.show();
@@ -209,6 +210,7 @@ public class PeticionesFormularioCita {
                 if(response.body() != null){
                     Toast.makeText(context, "Se ha editado tu cita correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CitasPaciente.class);
+                    intent.putExtra("ciudadano", ciudadanoDTO);
                     context.startActivity(intent);
                 }
             }
