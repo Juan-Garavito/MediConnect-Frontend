@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8F2F4"
+    tools:context=".Activity.PrescripcionesMedicas">
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="252dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="40dp"
+        android:text="Prescripciones  Médicas"
+        android:textAlignment="center"
+        android:textColor="@color/azul"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="272dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border_botton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18">
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="62dp"
+            android:layout_height="68dp"
+            android:background="@color/azul"
+            app:srcCompat="@drawable/logo_formula_medica" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="180dp"
+            android:layout_height="27dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="3dp"
+            android:layout_toEndOf="@+id/imageButton5"
+            android:paddingStart="10sp"
+            android:text="Fórmula Médica"
+            android:textColor="@color/azul"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="210dp"
+            android:layout_height="41dp"
+            android:layout_below="@+id/textView19"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-1dp"
+            android:layout_marginEnd="0dp"
+            android:paddingStart="8dp"
+            android:text="Puedes generar una fórmula médica para el paciente"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="272dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border_botton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:background="@color/azul"
+            app:srcCompat="@drawable/logo_orden_tratamiento" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="211dp"
+            android:layout_height="27dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/imageButton6"
+            android:paddingStart="10sp"
+            android:text="Orden Médica"
+            android:textColor="@color/azul"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="210dp"
+            android:layout_height="39dp"
+            android:layout_below="@+id/textView23"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="-1dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toEndOf="@+id/imageButton6"
+            android:paddingStart="8dp"
+            android:text="Puedes generar una orden médica para el paciente"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="272dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border_botton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+        <ImageButton
+            android:id="@+id/imageButton7"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@color/azul"
+            app:srcCompat="@drawable/logo_historias_clinicas" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView26"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:paddingStart="10sp"
+            android:text="Historia Médica"
+            android:textColor="@color/azul"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toEndOf="@+id/imageButton7"
+            android:paddingStart="8dp"
+            android:text="Puedes generar una historia médica para el paciente"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayaut4"
+        android:layout_width="272dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border_botton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/imageButton8"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@color/azul"
+            app:srcCompat="@drawable/logo_historial_medico" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_above="@+id/textView28"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toEndOf="@+id/imageButton8"
+            android:paddingStart="10sp"
+            android:text="Historial Médico"
+            android:textColor="@color/azul"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toEndOf="@+id/imageButton8"
+            android:paddingStart="8sp"
+            android:text="Puedes revisar historial médico del paciente"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

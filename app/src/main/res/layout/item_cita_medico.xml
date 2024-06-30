@@ -113,7 +113,7 @@
         android:id="@+id/idImagenIpsAM"
         android:layout_width="57dp"
         android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="36dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:padding="5dp"
@@ -129,8 +129,10 @@
         android:id="@+id/idCancelarCItaAM"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/red"
         android:text="Cancelar"
         android:textColor="#FFFFFF"
@@ -138,7 +140,8 @@
         app:iconTint="#CA2525"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/idbtnPrescripciones"
         app:layout_constraintTop_toBottomOf="@+id/idModaCitaMedico"
         app:rippleColor="#873535"
         tools:ignore="MissingConstraints" />
@@ -147,5 +150,21 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/idbtnPrescripciones"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/azul"
+        android:text="Prescripciones "
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/idImagenIpsAM"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idModaCitaMedico"
+        app:layout_constraintVertical_bias="0.045" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.mediconnect.Adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mediconnect.Activity.AgendarCitaPaciente;
+import com.example.mediconnect.Activity.PrescripcionesMedicas;
 import com.example.mediconnect.Modelos.CitaDTO;
 import com.example.mediconnect.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CitaMedicoAdapter extends RecyclerView.Adapter<CitaMedicoAdapter.ViewHolder>  {
@@ -51,8 +55,9 @@ public class CitaMedicoAdapter extends RecyclerView.Adapter<CitaMedicoAdapter.Vi
         public TextView textHoraMedico;
         public TextView textTipoCitaMedico;
         public ImageView imgIpsMedico;
-        public TextView textIpsMedico;
         public Button btnCancelarCitaMedico;
+
+        public Button btnPrescripciones;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,18 +70,49 @@ public class CitaMedicoAdapter extends RecyclerView.Adapter<CitaMedicoAdapter.Vi
         }
 
         public void bind(CitaDTO cita) {
+            String input = cita.getIdPaciente();
+            String[] partes = input.split(" ");
+            String idDocumentoPaciente = partes[0];
+            String primerNombrePacienteAM = partes[1];
+            String primerApellidoPcienteAM = partes[3];
+
             textCitaMedico.setText(cita.getEspecialidad());
-            textPacienteAM.setText(cita.getIdPaciente());
+            textPacienteAM.setText(primerNombrePacienteAM +" "+ primerApellidoPcienteAM);
             textHoraMedico.setText(cita.getFranjaHoraria());
             textTipoCitaMedico.setText(cita.getModalidadCita());
             Glide.with(itemView.getContext()).load(cita.getUrlIps()).into(imgIpsMedico);
+
+
+            if(cita.getModalidadCita().equals("Virtual")){
+                imgIpsMedico.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listenerCitaMedicoAdapterAdapter.ingresarChatMedico(cita);
+                    }
+                });
+            }
 
             btnCancelarCitaMedico.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listenerCitaMedicoAdapterAdapter.cancelarCitaMedico(cita);
                 }
+
             });
+
+            btnPrescripciones = itemView.findViewById(R.id.idbtnPrescripciones);
+
+            btnPrescripciones.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), PrescripcionesMedicas.class);
+                    intent.putExtra("idDocumentoPacienteAM", idDocumentoPaciente);
+                    intent.putExtra("cita", (Serializable) null);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+
+
         }
     }
 }
