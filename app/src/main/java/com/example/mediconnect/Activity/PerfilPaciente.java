@@ -23,6 +23,7 @@ import com.example.mediconnect.ClienteApi.Config.ClienteRetrofit;
 import com.example.mediconnect.Modelos.Ciudadano;
 import com.example.mediconnect.Modelos.CiudadanoDTO;
 import com.example.mediconnect.R;
+import com.example.mediconnect.Utilidades.AESEncryption;
 import com.example.mediconnect.Utilidades.CargaDialog;
 import com.example.mediconnect.databinding.ActivityPerfilPacienteBinding;
 
@@ -95,6 +96,8 @@ public class PerfilPaciente extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PerfilPaciente.this, AjustesPaciente.class);
+                intent.putExtra("ciudadano", ciudadanoDTO);
+                intent.putExtra("tipoPerfil", "0");
                 startActivity(intent);
             }
         });
@@ -118,7 +121,7 @@ public class PerfilPaciente extends AppCompatActivity {
         });
     }
 
-    public void dataTipoEstatico(Ciudadano ciudadano){
+    public void dataTipoEstatico(Ciudadano ciudadano) {
         binding.tvName.setText(ciudadano.getNombres());
         binding.tvSurname.setText(ciudadano.getApellidos());
         binding.etId.setText(ciudadano.getNumerodocumento());
@@ -129,9 +132,16 @@ public class PerfilPaciente extends AppCompatActivity {
         binding.tvRh.setText(tipoSangre.get(ciudadano.getIdtiposangre()));
         binding.etAddress.setText(ciudadano.getDireccion());
         binding.etEmail.setText(ciudadano.getCorreo());
-        binding.etPassword.setText(ciudadano.getPassword());
         binding.etTelefono.setText(ciudadano.getNumerocelular());
         Glide.with(getBaseContext()).load(ciudadano.getUrlimagenperfil()).into(binding.ivProfilePicture);
+
+        String contraseñaDesencriptada = null;
+        try {
+            contraseñaDesencriptada = AESEncryption.getInstance(getBaseContext()).descifrar(ciudadano.getPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        binding.etPassword.setText(contraseñaDesencriptada);
 
         this.habilitarInput(false);
     }
@@ -146,11 +156,18 @@ public class PerfilPaciente extends AppCompatActivity {
         binding.etDay.setText(ciudadano.getFechanacimiento().toString().split("-")[2]);
         binding.etAddress.setText(ciudadano.getDireccion());
         binding.etEmail.setText(ciudadano.getCorreo());
-        binding.etPassword.setText(ciudadano.getPassword());
         binding.etTelefono.setText(ciudadano.getNumerocelular());
         binding.tvMasculino.setBackgroundTintMode(ciudadano.getIdgenero() == 1 ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.MULTIPLY);
         binding.tvFemenino.setBackgroundTintMode(ciudadano.getIdgenero() == 2 ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.MULTIPLY);
         binding.etListTipoSangre.setText(tipoSangre.get(ciudadano.getIdtiposangre()));
+
+        String contraseñaDesencriptada = null;
+        try {
+            contraseñaDesencriptada = AESEncryption.getInstance(getBaseContext()).descifrar(ciudadano.getPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        binding.etPassword.setText(contraseñaDesencriptada);
 
         String[] tiposSangre = tipoSangre.values().toArray(new String[tipoSangre.size()]);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.list_item_drop_down, tiposSangre);
@@ -161,6 +178,12 @@ public class PerfilPaciente extends AppCompatActivity {
         binding.tvGender.setVisibility(View.GONE);
         binding.ivProfilePicture.setVisibility(View.GONE);
         binding.ivSettings.setVisibility(View.GONE);
+        binding.idBtnCitas.setVisibility(View.GONE);
+        binding.idBtnInicio.setVisibility(View.GONE);
+        binding.idBtnPerfil.setVisibility(View.GONE);
+        binding.textBtnCita.setVisibility(View.GONE);
+        binding.textBtnInicio.setVisibility(View.GONE);
+        binding.textBtnPerfil.setVisibility(View.GONE);
         binding.tvTitle.setText("Cambiando tú información");
         binding.tvMasculino.setVisibility(View.VISIBLE);
         binding.tvFemenino.setVisibility(View.VISIBLE);

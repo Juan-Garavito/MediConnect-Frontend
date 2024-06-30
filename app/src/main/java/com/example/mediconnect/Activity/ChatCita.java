@@ -110,7 +110,7 @@ public class ChatCita extends AppCompatActivity {
             }
         });
 
-        StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.31.35:8080/chats");
+        StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.0.108:8080/chats");
         stompClient.connect();
 
 

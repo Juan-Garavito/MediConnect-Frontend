@@ -64,7 +64,7 @@ public class CitasPaciente extends AppCompatActivity implements IListenerCitaAda
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), AgendarCitaPaciente.class);
-                intent.putExtra("idDocumento", idDocumento);
+                intent.putExtra("ciudadano", ciudadano);
                 intent.putExtra("cita", (Serializable) null);
                 startActivity(intent);
             }
@@ -121,7 +121,7 @@ public class CitasPaciente extends AppCompatActivity implements IListenerCitaAda
     @Override
     public void reprogramarCita(CitaDTO cita) {
         Intent intent = new Intent(getBaseContext(), AgendarCitaPaciente.class);
-        intent.putExtra("idDocumento", idDocumento);
+        intent.putExtra("ciudadano", ciudadano);
         intent.putExtra("cita", cita);
         startActivity(intent);
     }

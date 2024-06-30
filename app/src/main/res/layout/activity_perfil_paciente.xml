@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/cita_logo" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textBtnCita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Citas"
@@ -44,7 +44,7 @@
         app:srcCompat="@drawable/incio" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textBtnInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -70,7 +70,7 @@
         app:srcCompat="@drawable/perfil" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/textBtnPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
