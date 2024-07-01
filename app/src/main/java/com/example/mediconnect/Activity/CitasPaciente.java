@@ -120,6 +120,7 @@ public class CitasPaciente extends AppCompatActivity implements IListenerCitaAda
 
     @Override
     public void reprogramarCita(CitaDTO cita) {
+        Log.i("reprogramada", cita.toString());
         Intent intent = new Intent(getBaseContext(), AgendarCitaPaciente.class);
         intent.putExtra("ciudadano", ciudadano);
         intent.putExtra("cita", cita);
@@ -192,7 +193,6 @@ public class CitasPaciente extends AppCompatActivity implements IListenerCitaAda
             public void onResponse(Call<List<CitaDTO>> call, Response<List<CitaDTO>> response) {
                 dialog.dismiss();
 
-                Log.i("prueba5555", response.body()+"");
                 if(response.body() != null){
                     Log.i("citas", response.body().toString());
                     CitaAdapter citaAdapter = new CitaAdapter(response.body(), listenerCitaAdapter);

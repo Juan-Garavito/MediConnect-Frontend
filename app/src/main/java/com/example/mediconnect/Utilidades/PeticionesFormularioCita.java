@@ -50,15 +50,18 @@ public class PeticionesFormularioCita {
             @Override
             public void onResponse(Call<List<Especialidad>> call, Response<List<Especialidad>> response) {
                 List<Especialidad> especialidades =  response.body();
-                dataFormularioAgendar.setEspecialidads(especialidades);
-                String[] especialidadesText = new String[especialidades.size()];
-                for (int i = 0; i<especialidades.size(); i++){
-                    especialidadesText[i] = especialidades.get(i).getDescripcion();
-                    Log.i("especialidad", especialidades.get(i).getDescripcion());
+                if(response.body() != null){
+                    dataFormularioAgendar.setEspecialidads(especialidades);
+                    String[] especialidadesText = new String[especialidades.size()];
+                    for (int i = 0; i<especialidades.size(); i++){
+                        especialidadesText[i] = especialidades.get(i).getDescripcion();
+                        Log.i("especialidad", especialidades.get(i).getDescripcion());
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, especialidadesText);
+                    autoCompleteEspecialidades.setAdapter(arrayAdapter);
                 }
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, especialidadesText);
-                autoCompleteEspecialidades.setAdapter(arrayAdapter);
             }
 
             @Override
@@ -108,14 +111,17 @@ public class PeticionesFormularioCita {
             @Override
             public void onResponse(Call<List<FranjaHoraria>> call, Response<List<FranjaHoraria>> response) {
                 List<FranjaHoraria> franjaHorarias =  response.body();
-                dataFormularioAgendar.setFranjaHorarias(franjaHorarias);
-                String[] franjaHorariaText = new String[franjaHorarias.size()];
-                for (int i = 0; i<franjaHorarias.size(); i++){
-                    franjaHorariaText[i] = franjaHorarias.get(i).getDescripcion();
+                if(franjaHorarias != null){
+                    dataFormularioAgendar.setFranjaHorarias(franjaHorarias);
+                    String[] franjaHorariaText = new String[franjaHorarias.size()];
+                    for (int i = 0; i<franjaHorarias.size(); i++){
+                        franjaHorariaText[i] = franjaHorarias.get(i).getDescripcion();
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, franjaHorariaText);
+                    autoCompleteFranjaHoraria.setAdapter(arrayAdapter);
                 }
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, franjaHorariaText);
-                autoCompleteFranjaHoraria.setAdapter(arrayAdapter);
             }
 
             @Override
@@ -130,15 +136,18 @@ public class PeticionesFormularioCita {
         callModalidadCita.enqueue(new Callback<List<ModalidadCita>>() {
             @Override
             public void onResponse(Call<List<ModalidadCita>> call, Response<List<ModalidadCita>> response) {
-                List<ModalidadCita> modalidadCitas =  response.body();
-                dataFormularioAgendar.setModalidadCitas(modalidadCitas);
-                String[] modalidadCitasText = new String[modalidadCitas.size()];
-                for (int i = 0; i<modalidadCitas.size(); i++){
-                    modalidadCitasText[i] = modalidadCitas.get(i).getDescripcion();
+                if(response.body() != null){
+                    List<ModalidadCita> modalidadCitas =  response.body();
+                    dataFormularioAgendar.setModalidadCitas(modalidadCitas);
+                    String[] modalidadCitasText = new String[modalidadCitas.size()];
+                    for (int i = 0; i<modalidadCitas.size(); i++){
+                        modalidadCitasText[i] = modalidadCitas.get(i).getDescripcion();
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, modalidadCitasText);
+                    autoCompleteFranjaHoraria.setAdapter(arrayAdapter);
                 }
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, modalidadCitasText);
-                autoCompleteFranjaHoraria.setAdapter(arrayAdapter);
             }
 
             @Override
@@ -154,17 +163,20 @@ public class PeticionesFormularioCita {
         callIps.enqueue(new Callback<List<Ips>>() {
             @Override
             public void onResponse(Call<List<Ips>> call, Response<List<Ips>> response) {
-                List<Ips> ipsList =  response.body();
-                dataFormularioAgendar.setIpsList(ipsList);
-                String[] ipsListText = new String[ipsList.size()-1];
-                for (int i = 0; i<ipsList.size()-1; i++){
-                    ipsListText[i] = ipsList.get(i).getDescripcion();
-                    Log.i("Ips", ipsList.get(i).getDescripcion());
+                if(response.body() != null){
+                    List<Ips> ipsList =  response.body();
+                    dataFormularioAgendar.setIpsList(ipsList);
+                    String[] ipsListText = new String[ipsList.size()-1];
+                    for (int i = 0; i<ipsList.size()-1; i++){
+                        ipsListText[i] = ipsList.get(i).getDescripcion();
+                        Log.i("Ips", ipsList.get(i).getDescripcion());
+                    }
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, ipsListText);
+                    autoCompleteIps.setAdapter(arrayAdapter);
+                }
                 }
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.list_item_drop_down, ipsListText);
-                autoCompleteIps.setAdapter(arrayAdapter);
-            }
 
             @Override
             public void onFailure(Call<List<Ips>> call, Throwable t) {
