@@ -61,7 +61,7 @@ public class PrescripcionesMedicas extends AppCompatActivity {
         relativeLayoutOM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PrescripcionesMedicas.this, GenerarFormulaMedica.class);
+                Intent intent = new Intent(PrescripcionesMedicas.this, GenerarOrdenTratamiento.class);
                 startActivity(intent);
             }
         });
@@ -69,7 +69,7 @@ public class PrescripcionesMedicas extends AppCompatActivity {
         IBOM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PrescripcionesMedicas.this, GenerarFormulaMedica.class);
+                Intent intent = new Intent(PrescripcionesMedicas.this, GenerarOrdenTratamiento.class);
                 startActivity(intent);
             }
         });
